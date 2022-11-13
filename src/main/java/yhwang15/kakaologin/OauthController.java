@@ -1,5 +1,6 @@
 package yhwang15.kakaologin;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +34,16 @@ public class OauthController {
         modelAndView.setViewName("index");
 
         return modelAndView;
+    }
 
+    @RequestMapping(value= "/logout")
+    public ModelAndView logout(HttpSession session){
+        ModelAndView modelAndView = new ModelAndView();
+        kakaoApi.kakaoLogout((String) session.getAttribute("access_token"));
+        session.removeAttribute("access_token");
+        session.removeAttribute("userId");
+        modelAndView.setViewName("index");
+        return modelAndView;
     }
 
 }

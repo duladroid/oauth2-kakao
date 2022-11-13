@@ -107,4 +107,27 @@ public class KakaoApi {
     }
 
 
+    public void kakaoLogout(String accessToken) {
+        String reqURL = "http://kapi.kakao.com/v1/user/logout";
+        try{
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode = " + responseCode);
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String result = "";
+            String line = "";
+
+            while((line = bufferedReader.readLine())!= null){
+                result += line;
+            }
+            System.out.println(result);
+        } catch (Exception e){
+            e.printStackTrace();
+
+        }
+
+    }
 }
